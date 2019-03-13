@@ -2,34 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Blow : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        
-	}
+public class Blow : MonoBehaviour
+{
 
     private void OnTriggerStay(Collider other)
     {
-        
-        other.attachedRigidbody.AddForce(Vector3.left * 10);
+        if(GetComponent<Transform>().position.x > other.transform.position.x)
+            other.attachedRigidbody.AddForce(Vector3.left * 10);
+        else
+            other.attachedRigidbody.AddForce(Vector3.left * -10);
     }
-
-    //void CastRayToWorld()
-    //{
-    //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    //    Vector3 point = ray.origin + (ray.direction);
-    //    Debug.Log("World point is " + point);
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    Debug.Log("ObjectFound");
-    //}
 
 }

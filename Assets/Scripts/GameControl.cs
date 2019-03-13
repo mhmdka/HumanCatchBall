@@ -3,40 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class GameControl : MonoBehaviour, IPointerDownHandler
+public class GameControl : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-
-    private Camera cam;
-
-    private GameObject tempBlower;
-
+    [Header("Prefabs")]
     [SerializeField]
     private GameObject blower;
+    [SerializeField]
+    private GameObject human;
+    
+    private GameObject tempBlower;
 
+    private void Awake()
+    {
+        Physics.gravity = new Vector3(0, -2.0F, 0);
+        StartCoroutine(Generate());
+    }
+
+    private IEnumerator Generate()
+    {
+        while(true)
+        {
+            Vector3 instPoint = Camera.main.ScreenToWorldPoint(new Vector3(Random.Range(0, Screen.width), Screen.width, 0));
+            GameObject throwable = Instantiate(human, instPoint, Quaternion.identity);
+            throwable.transform.position = new Vector3(throwable.transform.position.x, throwable.transform.position.y, 0);
+            yield return new WaitForSeconds(1);
+        }
+    }
 
     public void OnPointerDown(PointerEventData data)
     {
-        Vector3 instPoint = cam.ScreenToWorldPoint(new Vector3(data.position.x, data.position.y, 0));
-
+        Vector3 instPoint = Camera.main.ScreenToWorldPoint(new Vector3(data.position.x, data.position.y, 0));
 
         tempBlower = Instantiate(blower, instPoint, Quaternion.identity);
         tempBlower.transform.position = new Vector3(tempBlower.transform.position.x, tempBlower.transform.position.y, 0);
-        //StartCoroutine(Destroy());
     }
 
-    private IEnumerator Destroy()
+    public void OnPointerUp (PointerEventData data)
     {
-        yield return new WaitForSeconds(2);
         Destroy(tempBlower);
     }
 
-    //public void OnPointerUP(PointerEventData data)
-    //{
-    //    Debug.Log("destroy");
-    //}
-
-    private void OnPointerUp(PointerEventData data)
-    {
-        Debug.Log("destroy");
-    }
 }
