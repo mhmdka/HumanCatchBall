@@ -15,7 +15,7 @@ public class GameControl : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void Awake()
     {
-        Physics.gravity = new Vector3(0, -2.0F, 0);
+        Physics.gravity = new Vector3(0, -2, 0);
         StartCoroutine(Generate());
     }
 
@@ -26,9 +26,11 @@ public class GameControl : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             Vector3 instPoint = Camera.main.ScreenToWorldPoint(new Vector3(Random.Range(0, Screen.width), Screen.width, 0));
             GameObject throwable = Instantiate(human, instPoint, Quaternion.identity);
             throwable.transform.position = new Vector3(throwable.transform.position.x, throwable.transform.position.y, 0);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(5);
         }
     }
+
+    
 
     public void OnPointerDown(PointerEventData data)
     {
