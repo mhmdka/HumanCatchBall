@@ -13,7 +13,7 @@ public class Goal : MonoBehaviour
         if (col.rigidbody.velocity.magnitude < 1)
         {
 
-            ScoreScript.score += 50;
+//            ScoreScript.score += 50;
         }
         else if (col.rigidbody.velocity.magnitude == 0 || col.rigidbody.velocity.magnitude >= 1){
             Destroy(col.gameObject); }
